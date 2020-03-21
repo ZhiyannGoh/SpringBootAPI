@@ -2,6 +2,8 @@ package learning.zhiyan.controller;
 
 import learning.zhiyan.entity.User;
 import learning.zhiyan.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @RestController
 public class UserController {
+
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     UserService userService;
