@@ -1,5 +1,6 @@
 package learning.zhiyan.entity;
 
+import learning.zhiyan.jpa.UserHistoryComposite;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,11 +8,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 @Builder
 @Entity
@@ -19,11 +20,12 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Data
 @DynamicUpdate
-@Table(name="user")
-public class User {
+@IdClass(UserHistoryComposite.class)
+@Table(name="user_history")
+public class UserHistory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
     @NotNull
     private String firstName;
@@ -34,7 +36,10 @@ public class User {
     @NotNull
     private String gender;
     @NotNull
-    private String insertDate;
+    private String flagIndicator;
+    @Id
+    @NotNull
+    private Timestamp updateTimestamp;
 
 }
 
