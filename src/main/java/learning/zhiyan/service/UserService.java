@@ -57,11 +57,17 @@ public class UserService {
     }
 
     public boolean deleteUser(long id) {
-        int deletedRecord = userDao.deleteUser(id);
-        logger.info("Number of records deleted: " + deletedRecord);
 
-        if (deletedRecord == 1) {
-            return true;
+        if(userDao.findById(id).isPresent()) {
+
+            User toDelete = userDao.findById(id).get();
+            int deletedRecord = userDao.deleteUser(toDelete.getId());
+            logger.info("Number of records deleted: " + deletedRecord);
+
+            if (deletedRecord == 1) {
+                userHistoryService.insertDeletedUser(toDelete);
+                return true;
+            }
         }
 
         logger.error("Deleted record should equals to 1");

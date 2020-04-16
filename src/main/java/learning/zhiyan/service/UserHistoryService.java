@@ -24,7 +24,6 @@ public class UserHistoryService {
     UserHistoryDao userHistoryDao;
 
     public void insertUserHistory(User beforeUserInfo, User updatedUserInfo) {
-
         if (beforeUserInfo.equals(updatedUserInfo)) {
             logger.info("Update not required - User information is the same");
         } else {
@@ -51,7 +50,13 @@ public class UserHistoryService {
 
             userHistoryDao.save(userHistory);
         }
+    }
 
+    public void insertDeletedUser(User deletedUser){
+        UserHistory userDeletion = new UserHistory(deletedUser.getId(), deletedUser.getFirstName(), deletedUser.getLastName(),
+                deletedUser.getAge(), deletedUser.getGender(), "D", new Timestamp(System.currentTimeMillis()));
+
+        userHistoryDao.save(userDeletion);
     }
 
     public List<UserHistory> getAllUserHistory() {
